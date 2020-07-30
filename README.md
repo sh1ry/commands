@@ -47,5 +47,26 @@
     } 
  ```
 </details>
+
+<details>
+ <summary> registering to the bukkit </summary>
+ 
+ ```java
+   public class ExamplePlugin extends JavaPlugin {
+
+      @Override
+      public void onEnable(){
+          final BukkitCommandManager commandManager = new BukkitCommandManager();
+
+          commandManager.handle(this);
+          commandManager.registerCommand(
+                  new Example()
+          );
+      }
+   }
+
+ ```
+ 
+<details>
  
 
