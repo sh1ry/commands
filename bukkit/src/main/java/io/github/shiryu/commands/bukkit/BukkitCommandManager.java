@@ -1,5 +1,6 @@
 package io.github.shiryu.commands.bukkit;
 
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -11,11 +12,18 @@ import io.github.shiryu.commands.api.locale.CommandLocale;
 import io.github.shiryu.commands.api.models.CommandExecutable;
 import io.github.shiryu.commands.api.models.SimpleParameter;
 import io.github.shiryu.commands.api.parameter.ParameterType;
+import io.github.shiryu.commands.api.parameter.defaults.*;
 import io.github.shiryu.commands.api.sender.SimpleSender;
 import io.github.shiryu.commands.bukkit.command.BukkitExecutable;
 import io.github.shiryu.commands.bukkit.listener.BukkitCommandListener;
+import io.github.shiryu.commands.bukkit.parameter.GameModeParameterType;
+import io.github.shiryu.commands.bukkit.parameter.PlayerParameterType;
+import io.github.shiryu.commands.bukkit.parameter.UUIDParameterType;
+import io.github.shiryu.commands.bukkit.parameter.WorldParameterType;
 import lombok.Getter;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
+import org.bukkit.World;
 import org.bukkit.command.SimpleCommandMap;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
@@ -32,7 +40,13 @@ import java.util.*;
 public class BukkitCommandManager implements CommandManager<Plugin> {
 
     private final List<CommandExecutable> commands = Lists.newArrayList();
-    private final Map<Class<?>, ParameterType> parameterTypes = Maps.newConcurrentMap();
+    private final Map<Class<?>, ParameterType> parameterTypes = ImmutableMap.<Class<?>, ParameterType>builder()
+            .put(Boolean.class, new BooleanParameterType())
+            .put(Double.class, new DoubleParameterType())
+            .put(Float.class, new FloatParameterType())
+            .put(Integer.class, new IntegerParameterType())
+            .put(Long.class, new LongParameterType())
+            .build();
 
     private Plugin plugin;
     private BukkitCommandMap commandMap;
@@ -66,6 +80,11 @@ public class BukkitCommandManager implements CommandManager<Plugin> {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        registerParameterType(GameMode.class, new GameModeParameterType());
+        registerParameterType(Player.class, new PlayerParameterType());
+        registerParameterType(UUID.class, new UUIDParameterType());
+        registerParameterType(World.class, new WorldParameterType());
     }
 
     @Override
