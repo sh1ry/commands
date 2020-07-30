@@ -44,16 +44,16 @@ public class BukkitCommandMap extends SimpleCommandMap {
 
             CommandLoop:
             for (SimpleCommand command : commandManager.getCommands()) {
-                if (!command.canAccess(bukkitSender)) {
+                if (!command.canAccess(bukkitSender))
                     continue;
-                }
+
 
                 for (String alias : command.getNames()) {
                     String split = alias.split(" ")[0];
 
-                    if (spaceIndex != -1) {
+                    if (spaceIndex != -1)
                         split = alias;
-                    }
+
 
                     if (StringUtil.startsWithIgnoreCase(split.trim(), cmdLine.trim()) || StringUtil.startsWithIgnoreCase(cmdLine.trim(), split.trim())) {
                         if (spaceIndex == -1 && cmdLine.length() < alias.length()) {
@@ -61,20 +61,20 @@ public class BukkitCommandMap extends SimpleCommandMap {
                         } else if (cmdLine.toLowerCase().startsWith(alias.toLowerCase() + " ") && command.getParameters().size() > 0) {
                             int paramIndex = (cmdLine.split(" ").length - alias.split(" ").length);
 
-                            if (paramIndex == command.getParameters().size() || !cmdLine.endsWith(" ")) {
+                            if (paramIndex == command.getParameters().size() || !cmdLine.endsWith(" "))
                                 paramIndex = paramIndex - 1;
-                            }
 
-                            if (paramIndex < 0) {
+
+                            if (paramIndex < 0)
                                 paramIndex = 0;
-                            }
+
 
                             SimpleParameter paramData = command.getParameters().get(paramIndex);
                             String[] params = cmdLine.split(" ");
 
-                            for (String completion : commandManager.tabCompleteParameter(bukkitSender, cmdLine.endsWith(" ") ? "" : params[params.length - 1], paramData.getParameterClass(), paramData.getTabCompleteFlags())) {
+                            for (String completion : commandManager.tabCompleteParameter(bukkitSender, cmdLine.endsWith(" ") ? "" : params[params.length - 1], paramData.getParameterClass(), paramData.getTabCompleteFlags()))
                                 completions.add(completion);
-                            }
+
 
                             doneHere = true;
 

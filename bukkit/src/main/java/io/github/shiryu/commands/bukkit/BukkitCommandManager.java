@@ -90,19 +90,16 @@ public class BukkitCommandManager implements CommandManager<Plugin> {
                     }
                 }
 
-                if (parameterAnnotation != null) {
-                    parameters.add(
-                            new SimpleParameter(
-                                    parameterAnnotation.name(),
-                                    parameterAnnotation.defaultValue(),
-                                    parameterAnnotation.tabCompleteFlags(),
-                                    method.getParameterTypes()[parameterIndex]
-                            )
-                    );
-                } else {
-                    Bukkit.getLogger().warning("Method '" + method.getName() + "' has a parameter without a @Parameter annotation.");
-                    return;
-                }
+                if (parameterAnnotation == null) return;
+
+                parameters.add(
+                        new SimpleParameter(
+                                parameterAnnotation.name(),
+                                parameterAnnotation.defaultValue(),
+                                parameterAnnotation.tabCompleteFlags(),
+                                method.getParameterTypes()[parameterIndex]
+                        )
+                );
             }
 
             commands.add(
@@ -146,20 +143,15 @@ public class BukkitCommandManager implements CommandManager<Plugin> {
                 if (messageString.startsWith(aliasString)) {
                     found = commandData;
 
-                    if (messageString.length() > aliasString.length()) {
-                        if (found.getParameters().size() == 0) {
-                            continue;
-                        }
-                    }
+                    if (messageString.length() > aliasString.length() && found.getParameters().size() == 0)
+                        continue;
 
-                    // If there's 'space' after the command, parse args.
-                    // The +1 is there to account for a space after the command if there's parameters
-                    if (command.length() > alias.length() + 1) {
-                        // See above as to... why this works.
+
+
+                    if (command.length() > alias.length() + 1)
                         args = (command.substring(alias.length() + 1)).split(" ");
-                    }
 
-                    // We break to the command loop as we have 2 for loops here.
+
                     break CommandLoop;
                 }
             }

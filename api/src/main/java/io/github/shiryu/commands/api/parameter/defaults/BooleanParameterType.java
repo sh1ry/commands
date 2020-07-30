@@ -23,6 +23,7 @@ public class BooleanParameterType implements ParameterType<Boolean> {
             .put("off", false)
             .put("no", false)
             .build();
+
     @NotNull
     @Override
     public Boolean transform(@NotNull final SimpleSender sender, @NotNull final String value) {
