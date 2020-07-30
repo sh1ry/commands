@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import io.github.shiryu.commands.api.CommandHandler;
 import io.github.shiryu.commands.api.CommandManager;
 import io.github.shiryu.commands.api.annotations.Command;
@@ -40,13 +41,7 @@ import java.util.*;
 public class BukkitCommandManager implements CommandManager<Plugin> {
 
     private final List<CommandExecutable> commands = Lists.newArrayList();
-    private final Map<Class<?>, ParameterType> parameterTypes = ImmutableMap.<Class<?>, ParameterType>builder()
-            .put(Boolean.class, new BooleanParameterType())
-            .put(Double.class, new DoubleParameterType())
-            .put(Float.class, new FloatParameterType())
-            .put(Integer.class, new IntegerParameterType())
-            .put(Long.class, new LongParameterType())
-            .build();
+    private final Map<Class<?>, ParameterType> parameterTypes = new HashMap<>();
 
     private Plugin plugin;
     private BukkitCommandMap commandMap;
@@ -81,6 +76,11 @@ public class BukkitCommandManager implements CommandManager<Plugin> {
             e.printStackTrace();
         }
 
+        registerParameterType(Boolean.class, new BooleanParameterType());
+        registerParameterType(Double.class, new DoubleParameterType());
+        registerParameterType(Float.class, new FloatParameterType());
+        registerParameterType(Integer.class, new IntegerParameterType());
+        registerParameterType(Long.class, new LongParameterType());
         registerParameterType(GameMode.class, new GameModeParameterType());
         registerParameterType(Player.class, new PlayerParameterType());
         registerParameterType(UUID.class, new UUIDParameterType());
