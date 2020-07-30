@@ -13,7 +13,7 @@ public interface CommandManager<T> {
 
     void handle(@NotNull final T plugin);
 
-    void registerCommand(@NotNull final T plugin, @NotNull final CommandHandler command);
+    void registerCommand(@NotNull final CommandHandler command);
 
     <X> void registerParameterType(@NotNull final Class<X> clazz, @NotNull final ParameterType<X> parameterType);
 

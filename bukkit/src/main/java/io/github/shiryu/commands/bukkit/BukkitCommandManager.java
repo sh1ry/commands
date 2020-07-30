@@ -36,10 +36,13 @@ public class BukkitCommandManager implements CommandManager<Plugin> {
     private final List<SimpleCommand> commands = Lists.newArrayList();
     private final Map<Class<?>, ParameterType> parameterTypes = Maps.newConcurrentMap();
 
+    private Plugin plugin;
     private BukkitCommandMap commandMap;
 
     @Override
     public void handle(@NotNull final Plugin plugin) {
+        this.plugin = plugin;
+
         Bukkit.getPluginManager().registerEvents(
                 new BukkitCommandListener(this),
                 plugin
@@ -68,7 +71,7 @@ public class BukkitCommandManager implements CommandManager<Plugin> {
     }
 
     @Override
-    public void registerCommand(@NotNull final Plugin plugin, @NotNull final CommandHandler command) {
+    public void registerCommand(@NotNull final CommandHandler command) {
         final Class<?> commandClazz = command.getClass();
 
         for (Method method : commandClazz.getMethods()){
