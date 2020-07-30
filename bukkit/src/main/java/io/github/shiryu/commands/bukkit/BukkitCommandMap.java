@@ -1,7 +1,7 @@
 package io.github.shiryu.commands.bukkit;
 
 import com.google.common.collect.Lists;
-import io.github.shiryu.commands.api.models.SimpleCommand;
+import io.github.shiryu.commands.api.models.CommandExecutable;
 import io.github.shiryu.commands.api.models.SimpleParameter;
 import lombok.Getter;
 import org.bukkit.Server;
@@ -43,7 +43,7 @@ public class BukkitCommandMap extends SimpleCommandMap {
             boolean doneHere = false;
 
             CommandLoop:
-            for (SimpleCommand command : commandManager.getCommands()) {
+            for (CommandExecutable command : commandManager.getCommands()) {
                 if (!command.canAccess(bukkitSender))
                     continue;
 

@@ -1,62 +1,32 @@
-package io.github.shiryu.commands.api.models;
+package io.github.shiryu.commands.bukkit.command;
 
 import io.github.shiryu.commands.api.CommandHandler;
 import io.github.shiryu.commands.api.CommandManager;
 import io.github.shiryu.commands.api.locale.CommandLocale;
+import io.github.shiryu.commands.api.models.CommandExecutable;
+import io.github.shiryu.commands.api.models.SimpleParameter;
 import io.github.shiryu.commands.api.sender.SimpleSender;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import io.github.shiryu.commands.bukkit.BukkitSender;
 import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
-@Getter
-@Setter
-@RequiredArgsConstructor
-public class SimpleCommand {
+public class BukkitExecutable extends CommandExecutable {
 
-    private final CommandHandler base;
-    private final String[] names;
-    private final String permission;
-    private final List<SimpleParameter> parameters;
-    private final Method method;
-
-    public boolean canAccess(@NotNull final SimpleSender sender){
-        if (permission.isEmpty()) return true;
-
-        return sender.hasPermission(permission);
+    public BukkitExecutable(@NotNull final CommandHandler base, @NotNull final String[] names,
+                            @NotNull final String permission,
+                            @NotNull final List<SimpleParameter> parameters,
+                            @NotNull final Method method) {
+        super(base, names, permission, parameters, method);
     }
 
-    @NotNull
-    public String getName(){
-        return this.names[0];
-    }
-
-    @NotNull
-    public String getUsageString() {
-        return (getUsageString(getName()));
-    }
-
-    @NotNull
-    public String getUsageString(@NotNull final String aliasUsed) {
-        StringBuilder stringBuilder = new StringBuilder();
-
-        for (SimpleParameter parameter : getParameters()) {
-            boolean needed = parameter.getDefaultValue().isEmpty();
-            stringBuilder.append(needed ? "<" : "[").append(parameter.getName());
-            stringBuilder.append(needed ? ">" : "]").append(" ");
-        }
-
-        return ("/" + aliasUsed.toLowerCase() + " " + stringBuilder.toString().trim().toLowerCase());
-    }
-
+    @Override
     public void execute(@NotNull final CommandManager commandManager, @NotNull final SimpleSender sender, @NotNull final String[] args) {
         final List<Object> transformedParameters = new ArrayList<>();
 
-        transformedParameters.add(sender);
+        if (sender instanceof BukkitSender) transformedParameters.add(((BukkitSender)sender).getSender());
 
         for (int parameterIndex = 0; parameterIndex < getParameters().size(); parameterIndex++) {
             SimpleParameter parameter = getParameters().get(parameterIndex);

@@ -1,13 +1,12 @@
 package io.github.shiryu.commands.api;
 
-import io.github.shiryu.commands.api.models.SimpleCommand;
+import io.github.shiryu.commands.api.models.CommandExecutable;
 import io.github.shiryu.commands.api.parameter.ParameterType;
 import io.github.shiryu.commands.api.sender.SimpleSender;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 public interface CommandManager<T> {
 
@@ -21,10 +20,10 @@ public interface CommandManager<T> {
     Object transformParameter(@NotNull final SimpleSender sender, @NotNull final String value, @NotNull final Class<?> clazz);
 
     @NotNull
-    SimpleCommand evalCommand(@NotNull final SimpleSender sender, @NotNull final String command);
+    CommandExecutable evalCommand(@NotNull final SimpleSender sender, @NotNull final String command);
 
     @NotNull
-    List<SimpleCommand> getCommands();
+    List<CommandExecutable> getCommands();
 
     @NotNull
     Map<Class<?>, ParameterType> getParameterTypes();

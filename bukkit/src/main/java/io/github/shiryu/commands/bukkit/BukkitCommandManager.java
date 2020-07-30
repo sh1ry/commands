@@ -3,25 +3,23 @@ package io.github.shiryu.commands.bukkit;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.google.common.collect.Sets;
 import io.github.shiryu.commands.api.CommandHandler;
 import io.github.shiryu.commands.api.CommandManager;
 import io.github.shiryu.commands.api.annotations.Command;
 import io.github.shiryu.commands.api.annotations.Parameter;
 import io.github.shiryu.commands.api.locale.CommandLocale;
-import io.github.shiryu.commands.api.models.SimpleCommand;
+import io.github.shiryu.commands.api.models.CommandExecutable;
 import io.github.shiryu.commands.api.models.SimpleParameter;
 import io.github.shiryu.commands.api.parameter.ParameterType;
 import io.github.shiryu.commands.api.sender.SimpleSender;
+import io.github.shiryu.commands.bukkit.command.BukkitExecutable;
 import io.github.shiryu.commands.bukkit.listener.BukkitCommandListener;
 import lombok.Getter;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.command.SimpleCommandMap;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.plugin.Plugin;
-import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 
 import java.lang.annotation.Annotation;
@@ -33,7 +31,7 @@ import java.util.*;
 @Getter
 public class BukkitCommandManager implements CommandManager<Plugin> {
 
-    private final List<SimpleCommand> commands = Lists.newArrayList();
+    private final List<CommandExecutable> commands = Lists.newArrayList();
     private final Map<Class<?>, ParameterType> parameterTypes = Maps.newConcurrentMap();
 
     private Plugin plugin;
@@ -103,7 +101,7 @@ public class BukkitCommandManager implements CommandManager<Plugin> {
             }
 
             commands.add(
-                    new SimpleCommand(
+                    new BukkitExecutable(
                             command,
                             commandAnnotation.names(),
                             commandAnnotation.permission(),
@@ -130,12 +128,12 @@ public class BukkitCommandManager implements CommandManager<Plugin> {
     }
 
     @Override
-    public @NotNull SimpleCommand evalCommand(@NotNull SimpleSender sender, @NotNull String command) {
+    public @NotNull CommandExecutable evalCommand(@NotNull final SimpleSender sender, @NotNull final String command) {
         String[] args = new String[]{};
-        SimpleCommand found = null;
+        CommandExecutable found = null;
 
         CommandLoop:
-        for (SimpleCommand commandData : commands) {
+        for (CommandExecutable commandData : commands) {
             for (String alias : commandData.getNames()) {
                 String messageString = command.toLowerCase() + " ";
                 String aliasString = alias.toLowerCase() + " ";
@@ -174,7 +172,7 @@ public class BukkitCommandManager implements CommandManager<Plugin> {
     }
 
     @Override
-    public @NotNull List<SimpleCommand> getCommands() {
+    public @NotNull List<CommandExecutable> getCommands() {
         return this.commands;
     }
 
