@@ -27,3 +27,25 @@
  ```
 </details>
 
+##Examples
+
+<details>
+ <summary> making basic commands </summary>
+ 
+ ```java
+    public class Example implements CommandHandler {
+
+        @Command(names = {"mycommand", "mycommand help"}, permission = "mycommand.help")
+        public void myCommand(@NotNull final CommandSender sender){
+            sender.sendMessage("test");
+        }
+
+        @Command(names = {"mycommand withparameter"}, permission = "mycommand.withparameter")
+        public void myCommandParameter(@Parameter(name = "player") @NotNull final Player player){
+            player.sendMessage("player");
+        }
+    } 
+ ```
+</details>
+ 
+
