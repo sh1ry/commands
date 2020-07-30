@@ -21,7 +21,7 @@
         <dependency>
             <groupId>com.github.ShiryuDev.commands</groupId>
             <artifactId>bukkit</artifactId>
-            <version>1.2</version>
+            <version>1.3.1</version>
         </dependency>
     </dependencies>
  ```
