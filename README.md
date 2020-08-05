@@ -18,13 +18,23 @@
         </repository>
     </repositories>
 
+    ## for bukkit projects
     <dependencies>
         <dependency>
             <groupId>com.github.ShiryuDev.commands</groupId>
             <artifactId>bukkit</artifactId>
-            <version>1.3.1</version>
+            <version>1.3.2</version>
         </dependency>
     </dependencies>
+    
+    ##for bungeecord projects
+    <dependencies>
+        <dependency>
+            <groupId>com.github.ShiryuDev.commands</groupId>
+            <artifactId>bungeecord</artifactId>
+            <version>1.3.2</version>
+        </dependency>
+    </dependencies>    
  ```
 </details>
 
