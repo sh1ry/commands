@@ -12,7 +12,6 @@
     <modules>
         <module>api</module>
         <module>bukkit</module>
-        <module>bungeecord</module>
     </modules>
 
     <build>
