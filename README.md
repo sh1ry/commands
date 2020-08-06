@@ -80,4 +80,22 @@
  
  </details>
  
+ <details>
+ <summary> registering to the bungeecord </summary>
+ 
+  ```java
+      public class TestPlugin extends Plugin{
+
+      @Override
+      public void onEnable() {
+         final BungeecordCommandManager commandManager = new BungeecordCommandManager();
+
+         commandManager.handle(this);
+         commandManager.registerCommand(new Commands());
+     }
+  }
+   ```
+ 
+ </details>
+
 
