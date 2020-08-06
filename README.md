@@ -91,7 +91,6 @@
          final BungeecordCommandManager commandManager = new BungeecordCommandManager();
 
          commandManager.handle(this);
-
          commandManager.registerCommand(new Commands());
      }
   }
