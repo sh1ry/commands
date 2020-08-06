@@ -24,5 +24,7 @@ public class BungeeCommandListener implements Listener {
                 new BungeeSender(player),
                 event.getMessage().replaceAll("/", "")
         );
+
+        event.setCancelled(true);
     }
 }
