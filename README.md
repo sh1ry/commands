@@ -18,7 +18,6 @@
         </repository>
     </repositories>
 
-    ## for bukkit projects
     <dependencies>
         <dependency>
             <groupId>com.github.ShiryuDev.commands</groupId>
@@ -26,15 +25,7 @@
             <version>1.3.2</version>
         </dependency>
     </dependencies>
-    
-    ##for bungeecord projects
-    <dependencies>
-        <dependency>
-            <groupId>com.github.ShiryuDev.commands</groupId>
-            <artifactId>bungeecord</artifactId>
-            <version>1.3.2</version>
-        </dependency>
-    </dependencies>    
+     
  ```
 </details>
 
@@ -79,23 +70,6 @@
  ```
  
  </details>
- 
- <details>
- <summary> registering to the bungeecord </summary>
- 
-  ```java
-      public class TestPlugin extends Plugin{
 
-      @Override
-      public void onEnable() {
-         final BungeecordCommandManager commandManager = new BungeecordCommandManager();
-
-         commandManager.handle(this);
-         commandManager.registerCommand(new Commands());
-     }
-  }
-   ```
- 
- </details>
 
 
