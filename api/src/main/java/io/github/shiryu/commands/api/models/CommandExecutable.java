@@ -9,6 +9,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.Method;
 import java.util.List;
+import java.util.Locale;
 
 @Getter
 @RequiredArgsConstructor
@@ -21,19 +22,17 @@ public abstract class CommandExecutable {
     protected final Method method;
 
     public boolean canAccess(@NotNull final SimpleSender sender){
-        if (permission.isEmpty()) return true;
-
-        return sender.hasPermission(permission);
+        return permission.isEmpty() || sender.hasPermission(permission);
     }
 
     @NotNull
     public String getName(){
-        return this.names[0];
+        return names[0];
     }
 
     @NotNull
     public String getUsageString() {
-        return (getUsageString(getName()));
+        return getUsageString(getName());
     }
 
     @NotNull
@@ -46,7 +45,7 @@ public abstract class CommandExecutable {
             stringBuilder.append(needed ? ">" : "]").append(" ");
         }
 
-        return ("/" + aliasUsed.toLowerCase() + " " + stringBuilder.toString().trim().toLowerCase());
+        return "/" + aliasUsed.toLowerCase(Locale.ENGLISH) + " " + stringBuilder.toString().trim().toLowerCase(Locale.ENGLISH);
     }
 
     public abstract void execute(@NotNull final CommandManager commandManager, @NotNull final SimpleSender sender, @NotNull final String[] args);

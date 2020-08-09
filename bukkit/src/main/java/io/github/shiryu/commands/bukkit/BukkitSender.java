@@ -14,11 +14,11 @@ public class BukkitSender implements SimpleSender {
 
     @Override
     public boolean hasPermission(@NotNull final String permission) {
-        return this.sender.hasPermission(permission);
+        return sender.hasPermission(permission);
     }
 
     @Override
     public void sendMessage(@NotNull final String message) {
-        this.sender.sendMessage(message);
+        sender.sendMessage(message);
     }
 }

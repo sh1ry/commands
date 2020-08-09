@@ -11,7 +11,7 @@ public @interface Parameter {
 
     String name();
 
-    String defaultValue() default ("");
+    String defaultValue() default "";
 
-    String[] tabCompleteFlags() default ("");
+    String[] tabCompleteFlags() default "";
 }

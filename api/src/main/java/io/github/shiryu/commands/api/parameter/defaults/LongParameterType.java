@@ -7,16 +7,17 @@ import io.github.shiryu.commands.api.parameter.ParameterType;
 import io.github.shiryu.commands.api.sender.SimpleSender;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 public class LongParameterType implements ParameterType<Long> {
 
+    @Override
     public Long transform(@NotNull final SimpleSender sender, @NotNull final String value) {
-        if (value.toLowerCase().contains("e")) {
+        if (value.toLowerCase(Locale.ENGLISH).contains("e")) {
             sender.sendMessage(String.format(CommandLocale.NOT_VALID_NUMBER, value));
-            return (null);
+            return null;
         }
 
         try {
@@ -24,16 +25,17 @@ public class LongParameterType implements ParameterType<Long> {
 
             if (Double.isNaN(parsed) || !Double.isFinite(parsed)) {
                 sender.sendMessage(String.format(CommandLocale.NOT_VALID_NUMBER, value));
-                return (null);
+                return null;
             }
 
-            return (parsed);
+            return parsed;
         } catch (NumberFormatException exception) {
             sender.sendMessage(String.format(CommandLocale.NOT_VALID_NUMBER, value));
-            return (null);
+            return null;
         }
     }
 
+    @Override
     public List<String> tabComplete(@NotNull final SimpleSender sender, @NotNull final Set<String> flags, @NotNull final String source) {
         return Lists.newArrayList();
     }

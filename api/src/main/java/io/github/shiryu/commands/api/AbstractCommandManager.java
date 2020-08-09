@@ -8,8 +8,6 @@ import io.github.shiryu.commands.api.parameter.ParameterType;
 import io.github.shiryu.commands.api.sender.SimpleSender;
 import org.jetbrains.annotations.NotNull;
 
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Method;
 import java.util.*;
 
 public abstract class AbstractCommandManager<T> implements CommandManager<T> {
@@ -21,27 +19,24 @@ public abstract class AbstractCommandManager<T> implements CommandManager<T> {
 
     @Override
     public <X> void registerParameterType(@NotNull final Class<X> clazz, @NotNull final ParameterType<X> parameterType) {
-        this.parameterTypes.put(clazz, parameterType);
+        parameterTypes.put(clazz, parameterType);
     }
 
     @Override
     public @NotNull Object transformParameter(@NotNull final SimpleSender sender, @NotNull final String value, @NotNull final Class<?> clazz) {
-        if (clazz.equals(String.class))
-            return value;
-
-        return parameterTypes.get(clazz).transform(sender, value);
+        return clazz.equals(String.class) ? value : parameterTypes.get(clazz).transform(sender, value);
     }
 
     @Override
     public @NotNull CommandExecutable evalCommand(@NotNull final SimpleSender sender, @NotNull final String command) {
-        String[] args = new String[]{};
+        String[] args = {};
         CommandExecutable found = null;
 
         CommandLoop:
         for (CommandExecutable commandData : commands) {
             for (String alias : commandData.getNames()) {
-                String messageString = command.toLowerCase() + " ";
-                String aliasString = alias.toLowerCase() + " ";
+                String messageString = command.toLowerCase(Locale.ENGLISH) + " ";
+                String aliasString = alias.toLowerCase(Locale.ENGLISH) + " ";
 
                 if (messageString.startsWith(aliasString)) {
                     found = commandData;
@@ -52,7 +47,7 @@ public abstract class AbstractCommandManager<T> implements CommandManager<T> {
 
 
                     if (command.length() > alias.length() + 1)
-                        args = (command.substring(alias.length() + 1)).split(" ");
+                        args = command.substring(alias.length() + 1).split(" ");
 
 
                     break CommandLoop;

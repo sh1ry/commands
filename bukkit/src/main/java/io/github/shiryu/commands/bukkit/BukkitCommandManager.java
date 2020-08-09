@@ -1,21 +1,11 @@
 package io.github.shiryu.commands.bukkit;
 
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import io.github.shiryu.commands.api.AbstractCommandManager;
 import io.github.shiryu.commands.api.CommandHandler;
-import io.github.shiryu.commands.api.CommandManager;
 import io.github.shiryu.commands.api.annotations.Command;
 import io.github.shiryu.commands.api.annotations.Parameter;
-import io.github.shiryu.commands.api.locale.CommandLocale;
-import io.github.shiryu.commands.api.models.CommandExecutable;
 import io.github.shiryu.commands.api.models.SimpleParameter;
-import io.github.shiryu.commands.api.parameter.ParameterType;
 import io.github.shiryu.commands.api.parameter.defaults.*;
-import io.github.shiryu.commands.api.sender.SimpleSender;
 import io.github.shiryu.commands.bukkit.command.BukkitExecutable;
 import io.github.shiryu.commands.bukkit.listener.BukkitCommandListener;
 import io.github.shiryu.commands.bukkit.parameter.GameModeParameterType;
@@ -28,7 +18,6 @@ import org.bukkit.GameMode;
 import org.bukkit.World;
 import org.bukkit.command.SimpleCommandMap;
 import org.bukkit.entity.Player;
-import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 
@@ -58,7 +47,7 @@ public class BukkitCommandManager extends AbstractCommandManager<Plugin> {
 
             final Object oldCommandMap = commandMapField.get(plugin.getServer());
 
-            this.commandMap = new BukkitCommandMap(plugin.getServer(), this);
+            commandMap = new BukkitCommandMap(plugin.getServer(), this);
 
             final Field knownCommandsField = SimpleCommandMap.class.getDeclaredField("knownCommands");
             knownCommandsField.setAccessible(true);
@@ -67,8 +56,8 @@ public class BukkitCommandManager extends AbstractCommandManager<Plugin> {
             modifiersField.setAccessible(true);
             modifiersField.setInt(knownCommandsField, knownCommandsField.getModifiers() & ~Modifier.FINAL);
 
-            knownCommandsField.set(this.commandMap, knownCommandsField.get(oldCommandMap));
-            commandMapField.set(plugin.getServer(), this.commandMap);
+            knownCommandsField.set(commandMap, knownCommandsField.get(oldCommandMap));
+            commandMapField.set(plugin.getServer(), commandMap);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -126,7 +115,7 @@ public class BukkitCommandManager extends AbstractCommandManager<Plugin> {
                     )
             );
 
-            Collections.sort(commands, ((o1, o2) -> o1.getName().length() - o2.getName().length()));
+            commands.sort(Comparator.comparingInt(o -> o.getName().length()));
         }
     }
 }

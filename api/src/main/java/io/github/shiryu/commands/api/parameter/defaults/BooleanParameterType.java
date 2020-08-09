@@ -1,6 +1,5 @@
 package io.github.shiryu.commands.api.parameter.defaults;
 
-
 import com.google.common.collect.ImmutableMap;
 import io.github.shiryu.commands.api.locale.CommandLocale;
 import io.github.shiryu.commands.api.parameter.ParameterType;
