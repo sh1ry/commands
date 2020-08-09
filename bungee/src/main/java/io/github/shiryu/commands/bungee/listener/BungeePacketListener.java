@@ -30,12 +30,11 @@ public class BungeePacketListener extends PacketAdapter<TabCompleteResponse> {
         if (event.getPlayer() == null) return;
 
         final TabCompleteResponse packet = event.getPacket();
-        final AbstractPacketHandler packetHandler = event.getPacketHandler();
 
         final ProxiedPlayer player = event.getPlayer();
         final BungeeSender bungeeSender = new BungeeSender(player);
 
-        final Set<String> completions = new HashSet<>();
+        final List<String> completions = new ArrayList<>(packet.getCommands());
 
         for (CommandExecutable command : commandManager.getCommands()){
             String cmdLine = command.getName();
@@ -87,11 +86,9 @@ public class BungeePacketListener extends PacketAdapter<TabCompleteResponse> {
             }
         }
 
-        final List<String> commands = new ArrayList<>(packet.getCommands());
-
-        commands.addAll(completions);
-
-        packet.setCommands(commands);
+        Collections.sort(completions, (o1, o2) -> (o2.length() - o1.length()));
+        
+        packet.setCommands(completions);
 
         event.markForRewrite();
     }
