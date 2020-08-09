@@ -1,5 +1,8 @@
 # commands
  A lightweight,annotation based, easy to use command framework for bukkit and bungeecord
+ 
+If you need help please come to our support discord: 
+https://discord.com/invite/xaGZhwW
 
 [![idea](https://www.elegantobjects.org/intellij-idea.svg)](https://www.jetbrains.com/idea/)
 [![Build Status](https://travis-ci.com/ShiryuDev/commands.svg?branch=master)](https://travis-ci.com/ShiryuDev/commands)
