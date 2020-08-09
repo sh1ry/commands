@@ -32,7 +32,7 @@ public class ProxiedPlayerParameterType implements ParameterType<ProxiedPlayer> 
     public @NotNull List<String> tabComplete(@NotNull final SimpleSender sender, @NotNull final Set<String> flags, @NotNull final String value) {
         return ProxyServer.getInstance().getPlayers().stream()
                 .map(ProxiedPlayer::getName)
-                .filter(name -> StringUtils.startsWithIgnoreCase(name, value))
+                .filter(s -> StringUtils.startsWithIgnoreCase(s, value))
                 .collect(Collectors.toList());
     }
 }
