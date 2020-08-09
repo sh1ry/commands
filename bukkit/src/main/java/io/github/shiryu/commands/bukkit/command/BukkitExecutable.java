@@ -38,9 +38,13 @@ public class BukkitExecutable extends CommandExecutable {
                 return;
             }
 
-            Optional.of(commandManager.transformParameter(sender, passedParameter, parameter.getParameterClass()))
-                    .ifPresent(transformedParameters::add);
+            Object result = commandManager.transformParameter(sender, passedParameter, parameter.getParameterClass());
 
+            if (result == null) {
+                return;
+            }
+
+            transformedParameters.add(result);
         }
 
         try {
