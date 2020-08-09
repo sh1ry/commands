@@ -67,11 +67,9 @@
       @Override
       public void onEnable(){
           final BukkitCommandManager commandManager = new BukkitCommandManager();
-
+          
           commandManager.handle(this);
-          commandManager.registerCommand(
-                  new Example()
-          );
+          commandManager.registerCommand(new Commands());
       }
    }
 
