@@ -12,6 +12,7 @@
     <modules>
         <module>api</module>
         <module>bukkit</module>
+        <module>bungee</module>
     </modules>
 
     <build>

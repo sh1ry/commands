@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>io.github.shiryu.commands</groupId>
+        <artifactId>parent</artifactId>
+        <version>1.3.4</version>
+    </parent>
+
+    <artifactId>bungee</artifactId>
+
+    <repositories>
+        <repository>
+            <id>exceptionflug</id>
+            <url>https://mvn.exceptionflug.de/repository/exceptionflug-public/</url>
+        </repository>
+    </repositories>
+
+    <dependencies>
+        <dependency>
+            <groupId>net.md-5</groupId>
+            <artifactId>bungeecord-proxy</artifactId>
+            <version>1.16-R0.2-SNAPSHOT</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/libs/BungeeCord.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>io.github.shiryu.commands</groupId>
+            <artifactId>api</artifactId>
+            <version>1.3.4</version>
+        </dependency>
+        <dependency>
+            <groupId>de.exceptionflug</groupId>
+            <artifactId>protocolize-api</artifactId>
+            <version>1.6.1-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+</project>
