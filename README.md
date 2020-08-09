@@ -19,10 +19,18 @@
     </repositories>
 
     <dependencies>
+        ## for bukkit projects
         <dependency>
             <groupId>com.github.ShiryuDev.commands</groupId>
             <artifactId>bukkit</artifactId>
-            <version>1.3.4</version>
+            <version>1.3.5</version>
+        </dependency>
+        
+        ## for bungeecord projects
+        <dependency>
+            <groupId>com.github.ShiryuDev.commands</groupId>
+            <artifactId>bungee</artifactId>
+            <version>1.3.5</version>
         </dependency>
     </dependencies>
      
@@ -69,6 +77,24 @@
 
  ```
  
+ </details>
+ 
+ <details>
+ <summary> registering to the bungeecord </summary>
+ 
+ ```java
+    public class ExamplePlugin extends Plugin {
+
+        @Override
+        public void onEnable() {
+            final BungeeCommandManager commandManager = new BungeeCommandManager();
+
+            commandManager.handle(this);
+            commandManager.registerCommand(new Commands());
+        }
+    }
+
+ ```
  </details>
 
 
