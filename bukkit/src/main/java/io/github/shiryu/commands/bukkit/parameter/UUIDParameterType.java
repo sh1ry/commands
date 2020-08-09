@@ -29,7 +29,7 @@ public class UUIDParameterType implements ParameterType<UUID> {
         try{
             return UUID.fromString(value);
         }catch (Exception e){
-            sender.sendMessage(String.format(CommandLocale.NOT_FOUND, value));
+            sender.sendMessage(org.apache.commons.lang3.StringUtils.replace(CommandLocale.NOT_FOUND, "%s", value));
 
             return null;
         }

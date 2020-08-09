@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableMap;
 import io.github.shiryu.commands.api.locale.CommandLocale;
 import io.github.shiryu.commands.api.parameter.ParameterType;
 import io.github.shiryu.commands.api.sender.SimpleSender;
+import org.apache.commons.lang3.StringUtils;
 import org.bukkit.GameMode;
 import org.bukkit.util.StringUtil;
 import org.jetbrains.annotations.NotNull;
@@ -31,7 +32,7 @@ public class GameModeParameterType implements ParameterType<GameMode> {
     @Override
     public GameMode transform(@NotNull final SimpleSender sender, @NotNull String value) {
         if (!TYPINGS.containsKey(value)){
-            sender.sendMessage(CommandLocale.NOT_FOUND);
+            sender.sendMessage(StringUtils.replace(CommandLocale.NOT_FOUND, "%s", value));
 
             return null;
         }

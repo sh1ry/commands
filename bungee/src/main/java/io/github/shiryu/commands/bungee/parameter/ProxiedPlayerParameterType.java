@@ -20,7 +20,7 @@ public class ProxiedPlayerParameterType implements ParameterType<ProxiedPlayer> 
         final ProxiedPlayer player = ProxyServer.getInstance().getPlayer(value);
 
         if (player == null){
-            sender.sendMessage(CommandLocale.NOT_FOUND);
+            sender.sendMessage(StringUtils.replace(CommandLocale.NOT_FOUND, "%s", value));
 
             return null;
         }

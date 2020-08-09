@@ -28,7 +28,7 @@ public class PlayerParameterType implements ParameterType<Player> {
         final Player player = Bukkit.getPlayer(value);
 
         if (player == null){
-            sender.sendMessage(String.format(CommandLocale.NOT_FOUND, value));
+            sender.sendMessage(StringUtils.replace(CommandLocale.NOT_FOUND, "%s", value));
 
             return null;
         }
