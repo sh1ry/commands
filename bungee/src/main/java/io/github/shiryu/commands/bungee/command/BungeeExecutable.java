@@ -39,9 +39,9 @@ public class BungeeExecutable extends CommandExecutable {
 
             Object result = commandManager.transformParameter(sender, passedParameter, parameter.getParameterClass());
 
-            if (result == null) {
+            if (result == null)
                 return;
-            }
+
 
             transformedParameters.add(result);
         }
