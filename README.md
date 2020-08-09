@@ -1,5 +1,5 @@
 # commands
- bukkit command framework
+ A lightweight, easy to use command framework for bukkit and bungeecord
 
 [![idea](https://www.elegantobjects.org/intellij-idea.svg)](https://www.jetbrains.com/idea/)
 [![Build Status](https://travis-ci.com/ShiryuDev/commands.svg?branch=master)](https://travis-ci.com/ShiryuDev/commands)
@@ -23,14 +23,14 @@
         <dependency>
             <groupId>com.github.ShiryuDev.commands</groupId>
             <artifactId>bukkit</artifactId>
-            <version>1.3.8</version>
+            <version>1.4.0</version>
         </dependency>
         
         ## for bungeecord projects
         <dependency>
             <groupId>com.github.ShiryuDev.commands</groupId>
             <artifactId>bungee</artifactId>
-            <version>1.3.8</version>
+            <version>1.4.0</version>
         </dependency>
     </dependencies>
      
