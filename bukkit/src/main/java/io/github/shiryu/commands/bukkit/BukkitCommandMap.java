@@ -28,7 +28,7 @@ public class BukkitCommandMap extends SimpleCommandMap {
     @Override
     public List<String> tabComplete(@NotNull final CommandSender sender, @NotNull final String cmdLine) {
         if (!(sender instanceof Player)) {
-            return (null);
+            return null;
         }
 
         final Player player = (Player) sender;
@@ -57,40 +57,42 @@ public class BukkitCommandMap extends SimpleCommandMap {
 
                     if (StringUtil.startsWithIgnoreCase(split.trim(), cmdLine.trim()) || StringUtil.startsWithIgnoreCase(cmdLine.trim(), split.trim())) {
                         if (spaceIndex == -1 && cmdLine.length() < alias.length()) {
-                            completions.add("/" + split.toLowerCase());
-                        } else if (cmdLine.toLowerCase().startsWith(alias.toLowerCase() + " ") && command.getParameters().size() > 0) {
-                            int paramIndex = (cmdLine.split(" ").length - alias.split(" ").length);
-
-                            if (paramIndex == command.getParameters().size() || !cmdLine.endsWith(" "))
-                                paramIndex = paramIndex - 1;
-
-
-                            if (paramIndex < 0)
-                                paramIndex = 0;
-
-
-                            SimpleParameter paramData = command.getParameters().get(paramIndex);
-                            String[] params = cmdLine.split(" ");
-
-                            for (String completion : commandManager.tabCompleteParameter(bukkitSender, cmdLine.endsWith(" ") ? "" : params[params.length - 1], paramData.getParameterClass(), paramData.getTabCompleteFlags()))
-                                completions.add(completion);
-
-
-                            doneHere = true;
-
-                            break CommandLoop;
+                            completions.add("/" + split.toLowerCase(Locale.ENGLISH));
                         } else {
-                            String halfSplitString = split.toLowerCase().replaceFirst(alias.split(" ")[0].toLowerCase(), "").trim();
-                            String[] splitString = halfSplitString.split(" ");
+                            final boolean endsWithSpace = !cmdLine.isEmpty() && cmdLine.charAt(cmdLine.length() - 1) == ' ';
+                            if (cmdLine.toLowerCase(Locale.ENGLISH).startsWith(alias.toLowerCase(Locale.ENGLISH) + " ") && !command.getParameters().isEmpty()) {
+                                int paramIndex = cmdLine.split(" ").length - alias.split(" ").length;
 
-                            String fixedAlias = splitString[splitString.length - 1].trim();
-                            String lastArg = cmdLine.endsWith(" ") ? "" : cmdLine.split(" ")[cmdLine.split(" ").length - 1];
+                                if (paramIndex == command.getParameters().size() || !endsWithSpace)
+                                    paramIndex -= 1;
 
-                            if (fixedAlias.length() >= lastArg.length()) {
-                                completions.add(fixedAlias);
+
+                                if (paramIndex < 0)
+                                    paramIndex = 0;
+
+
+                                SimpleParameter paramData = command.getParameters().get(paramIndex);
+                                String[] params = cmdLine.split(" ");
+
+                                completions.addAll(commandManager.tabCompleteParameter(bukkitSender, cmdLine.endsWith(" ") ? "" : params[params.length - 1], paramData.getParameterClass(), paramData.getTabCompleteFlags()));
+
+
+                                doneHere = true;
+
+                                break CommandLoop;
+                            } else {
+                                String halfSplitString = split.toLowerCase(Locale.ENGLISH).replaceFirst(alias.split(" ")[0].toLowerCase(Locale.ENGLISH), "").trim();
+                                String[] splitString = halfSplitString.split(" ");
+
+                                String fixedAlias = splitString[splitString.length - 1].trim();
+                                String lastArg = endsWithSpace ? "" : cmdLine.split(" ")[cmdLine.split(" ").length - 1];
+
+                                if (fixedAlias.length() >= lastArg.length()) {
+                                    completions.add(fixedAlias);
+                                }
+
+                                doneHere = true;
                             }
-
-                            doneHere = true;
                         }
                     }
                 }
@@ -99,18 +101,11 @@ public class BukkitCommandMap extends SimpleCommandMap {
             List<String> completionList = new ArrayList<>(completions);
 
             if (!doneHere) {
-                List<String> vanillaCompletionList = super.tabComplete(sender, cmdLine);
-
-                if (vanillaCompletionList == null) {
-                    vanillaCompletionList = new ArrayList<>();
-                }
-
-                for (String vanillaCompletion : vanillaCompletionList) {
-                    completionList.add(vanillaCompletion);
-                }
+                Optional.ofNullable(super.tabComplete(sender, cmdLine))
+                        .ifPresent(completionList::addAll);
             }
 
-            Collections.sort(completionList, (o1, o2) -> (o2.length() - o1.length()));
+            completionList.sort((o1, o2) -> o2.length() - o1.length());
 
             completionList.remove("w");
 

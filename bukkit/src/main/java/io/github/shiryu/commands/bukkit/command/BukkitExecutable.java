@@ -12,6 +12,7 @@ import org.jetbrains.annotations.NotNull;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class BukkitExecutable extends CommandExecutable {
 
@@ -37,13 +38,9 @@ public class BukkitExecutable extends CommandExecutable {
                 return;
             }
 
-            Object result = commandManager.transformParameter(sender, passedParameter, parameter.getParameterClass());
+            Optional.of(commandManager.transformParameter(sender, passedParameter, parameter.getParameterClass()))
+                    .ifPresent(transformedParameters::add);
 
-            if (result == null) {
-                return;
-            }
-
-            transformedParameters.add(result);
         }
 
         try {

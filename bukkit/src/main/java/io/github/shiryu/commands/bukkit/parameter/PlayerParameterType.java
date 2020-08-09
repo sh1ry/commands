@@ -22,7 +22,7 @@ public class PlayerParameterType implements ParameterType<Player> {
             final BukkitSender bukkitSender = (BukkitSender) sender;
 
             if (bukkitSender.getSender() instanceof Player)
-                return ((Player)bukkitSender.getSender());
+                return (Player) bukkitSender.getSender();
         }
 
         final Player player = Bukkit.getPlayer(value);
