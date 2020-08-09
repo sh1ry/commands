@@ -23,14 +23,14 @@
         <dependency>
             <groupId>com.github.ShiryuDev.commands</groupId>
             <artifactId>bukkit</artifactId>
-            <version>1.3.6</version>
+            <version>1.3.7</version>
         </dependency>
         
         ## for bungeecord projects
         <dependency>
             <groupId>com.github.ShiryuDev.commands</groupId>
             <artifactId>bungee</artifactId>
-            <version>1.3.6</version>
+            <version>1.3.7</version>
         </dependency>
     </dependencies>
      
