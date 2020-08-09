@@ -51,7 +51,7 @@ public class BungeePacketListener extends PacketAdapter<TabCompleteResponse> {
 
 
                 if (StringUtils.startsWithIgnoreCase(split.trim(), cmdLine.trim()) || StringUtils.startsWithIgnoreCase(cmdLine.trim(), split.trim())) {
-                    if (spaceIndex == -1 && cmdLine.length() < alias.length()) {
+                    if (spaceIndex == -1 && cmdLine.length() <= alias.length()) {
                         completions.add("/" + split.toLowerCase());
                     } else if (cmdLine.toLowerCase().startsWith(alias.toLowerCase() + " ") && command.getParameters().size() > 0) {
                         int paramIndex = (cmdLine.split(" ").length - alias.split(" ").length);
@@ -89,8 +89,6 @@ public class BungeePacketListener extends PacketAdapter<TabCompleteResponse> {
         Collections.sort(completions, (o1, o2) -> (o2.length() - o1.length()));
 
         packet.setCommands(completions);
-
-        completions.forEach(System.out::println);
 
         event.markForRewrite();
     }
