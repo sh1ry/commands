@@ -55,8 +55,8 @@ https://discord.com/invite/xaGZhwW
         }
 
         @Command(names = {"mycommand withparameter"}, permission = "mycommand.withparameter")
-        public void myCommandParameter(@Parameter(name = "player") @NotNull final Player player){
-            player.sendMessage("player");
+        public void myCommandParameter(@NotNull final Player sender, @Parameter(name="target") Player target){
+            player.sendMessage("player target: " + target.getName());
         }
     } 
  ```
