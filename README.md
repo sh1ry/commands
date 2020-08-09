@@ -59,6 +59,46 @@
 </details>
 
 <details>
+ <summary> creating parameter types for your own objects </summary>
+ 
+ ```java
+   public class SapphireRankParameterType implements ParameterType<SapphireRank> {
+
+       @NotNull
+       @Override
+       public SapphireRank transform(@NotNull final SimpleSender sender, @NotNull final String value) {
+           final SapphireRank rank = Sapphire.getInstance()
+                   .getManagerHandler()
+                   .getManager(RankManager.class)
+                   .findRank(value)
+                   .orElse(null);
+
+           if (rank == null){
+               sender.sendMessage(String.format(CommandLocale.NOT_FOUND, value));
+
+               return null;
+           }
+
+           return rank;
+       }
+
+       @Override
+       public @NotNull List<String> tabComplete(@NotNull final SimpleSender sender, @NotNull final Set<String> set, @NotNull final String value) {
+           return Sapphire.getInstance()
+                   .getManagerHandler()
+                   .getManager(RankManager.class)
+                   .getRANKS()
+                   .stream()
+                   .filter(rank -> StringUtils.startsWithIgnoreCase(value, rank.getName()))
+                   .map(SapphireRank::getName)
+                   .collect(Collectors.toList());
+       }
+   } 
+ ```
+ 
+</details>
+
+<details>
  <summary> registering to the bukkit </summary>
  
  ```java
