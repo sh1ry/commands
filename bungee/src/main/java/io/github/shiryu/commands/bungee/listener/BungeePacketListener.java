@@ -87,7 +87,7 @@ public class BungeePacketListener extends PacketAdapter<TabCompleteResponse> {
         }
 
         Collections.sort(completions, (o1, o2) -> (o2.length() - o1.length()));
-        
+
         packet.setCommands(completions);
 
         event.markForRewrite();
