@@ -18,11 +18,7 @@ public class BungeeCommandListener implements Listener {
     public void commandUsage(final ChatEvent event){
         if (!event.isCommand() || (!(event.getSender() instanceof ProxiedPlayer))) return;
 
-        commandManager.evalCommand(
-                new BungeeSender(((ProxiedPlayer)event.getSender())),
-                event.getMessage().replaceAll("/", "")
-        );
-
-        event.setCancelled(true);
+        if (commandManager.evalCommand(new BungeeSender((ProxiedPlayer)event.getSender()), event.getMessage().replaceAll("/", "")) != null)
+            event.setCancelled(true);
     }
 }
