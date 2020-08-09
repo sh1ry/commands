@@ -83,7 +83,8 @@
        }
 
        @Override
-       public @NotNull List<String> tabComplete(@NotNull final SimpleSender sender, @NotNull final Set<String> set, @NotNull final String value) {
+       @NotNull
+       public List<String> tabComplete(@NotNull final SimpleSender sender, @NotNull final Set<String> set, @NotNull final String value) {
            return Sapphire.getInstance()
                    .getManagerHandler()
                    .getManager(RankManager.class)
