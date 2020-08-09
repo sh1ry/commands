@@ -23,7 +23,7 @@ public class BungeeExecutable extends CommandExecutable {
     }
 
     @Override
-    public void execute(@NotNull CommandManager commandManager, @NotNull SimpleSender sender, @NotNull String[] args) {
+    public void execute(@NotNull final CommandManager commandManager, @NotNull final SimpleSender sender, @NotNull final String[] args) {
         final List<Object> transformedParameters = new ArrayList<>();
 
         if (sender instanceof BungeeSender) transformedParameters.add(((BungeeSender)sender).getSender());

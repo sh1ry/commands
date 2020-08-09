@@ -20,7 +20,7 @@ public class BungeePacketListener extends PacketAdapter<TabCompleteResponse> {
     private final BungeeCommandManager commandManager;
 
     public BungeePacketListener(@NotNull final BungeeCommandManager commandManager) {
-        super(Stream.UPSTREAM, TabCompleteResponse.class);
+        super(Stream.DOWNSTREAM, TabCompleteResponse.class);
 
         this.commandManager = commandManager;
     }
