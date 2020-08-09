@@ -22,7 +22,7 @@ public abstract class CommandExecutable {
     protected final Method method;
 
     public boolean canAccess(@NotNull final SimpleSender sender){
-        return permission.isEmpty() ? true : sender.hasPermission(permission);
+        return permission.isEmpty() || sender.hasPermission(permission);
     }
 
     @NotNull
