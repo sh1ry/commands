@@ -90,6 +90,8 @@ public class BungeePacketListener extends PacketAdapter<TabCompleteResponse> {
 
         packet.setCommands(completions);
 
+        completions.forEach(System.out::println);
+
         event.markForRewrite();
     }
 }
