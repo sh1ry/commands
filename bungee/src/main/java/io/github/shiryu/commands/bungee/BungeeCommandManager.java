@@ -1,6 +1,5 @@
 package io.github.shiryu.commands.bungee;
 
-import de.exceptionflug.protocolize.api.event.EventManager;
 import de.exceptionflug.protocolize.api.protocol.ProtocolAPI;
 import io.github.shiryu.commands.api.AbstractCommandManager;
 import io.github.shiryu.commands.api.CommandHandler;
