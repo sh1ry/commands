@@ -1,5 +1,4 @@
 # commands
-[![idea](https://www.elegantobjects.org/intellij-idea.svg)](https://www.jetbrains.com/idea/)
 [![Build Status](https://travis-ci.com/ShiryuDev/commands.svg?branch=master)](https://travis-ci.com/ShiryuDev/commands)
 [![](https://jitpack.io/v/ShiryuDev/commands.svg)](https://jitpack.io/#ShiryuDev/commands)
 [![CodeFactor](https://www.codefactor.io/repository/github/shiryudev/commands/badge)](https://www.codefactor.io/repository/github/shiryudev/commands)
