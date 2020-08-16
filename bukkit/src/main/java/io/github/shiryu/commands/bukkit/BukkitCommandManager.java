@@ -12,6 +12,7 @@ import io.github.shiryu.commands.bukkit.parameter.GameModeParameterType;
 import io.github.shiryu.commands.bukkit.parameter.PlayerParameterType;
 import io.github.shiryu.commands.bukkit.parameter.UUIDParameterType;
 import io.github.shiryu.commands.bukkit.parameter.WorldParameterType;
+import io.github.shiryu.commands.bukkit.util.ReflectionUtil;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -20,11 +21,9 @@ import org.bukkit.command.SimpleCommandMap;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
-
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
 import java.util.*;
 
 @Getter
@@ -35,33 +34,37 @@ public class BukkitCommandManager extends AbstractCommandManager<Plugin> {
     @Override
     public void handle(@NotNull final Plugin plugin) {
         this.plugin = plugin;
+        this.commandMap = new BukkitCommandMap(plugin.getServer(), this);
 
         Bukkit.getPluginManager().registerEvents(
                 new BukkitCommandListener(this),
                 plugin
         );
 
-        try {
-            final Field commandMapField = plugin.getServer().getClass().getDeclaredField("commandMap");
-            commandMapField.setAccessible(true);
+        final Field commandMapField = ReflectionUtil.findField(
+                plugin.getServer().getClass(),
+                "commandMap"
+        );
 
-            final Object oldCommandMap = commandMapField.get(plugin.getServer());
+        final Field knownCommandsField = ReflectionUtil.findField(
+                SimpleCommandMap.class,
+                "knownCommands"
+        );
 
-            commandMap = new BukkitCommandMap(plugin.getServer(), this);
+        final Object oldCommandMap = ReflectionUtil.getField(commandMapField, plugin.getServer());
 
-            final Field knownCommandsField = SimpleCommandMap.class.getDeclaredField("knownCommands");
-            knownCommandsField.setAccessible(true);
+        ReflectionUtil.setFinalUnsafe(
+                knownCommandsField,
+                ReflectionUtil.getField(
+                        knownCommandsField,
+                        oldCommandMap
+                )
+        );
 
-            final Field modifiersField = Field.class.getDeclaredField("modifiers");
-            modifiersField.setAccessible(true);
-            modifiersField.setInt(knownCommandsField, knownCommandsField.getModifiers() & ~Modifier.FINAL);
-            modifiersField.setInt(commandMapField, commandMapField.getModifiers() & ~Modifier.FINAL);
-
-            knownCommandsField.set(commandMap, knownCommandsField.get(oldCommandMap));
-            commandMapField.set(plugin.getServer(), commandMap);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        ReflectionUtil.setFinalUnsafe(
+                commandMapField,
+                commandMap
+        );
 
         registerParameterType(Boolean.class, new BooleanParameterType());
         registerParameterType(Double.class, new DoubleParameterType());
@@ -119,4 +122,5 @@ public class BukkitCommandManager extends AbstractCommandManager<Plugin> {
             commands.sort(Comparator.comparingInt(o -> o.getName().length()));
         }
     }
+
 }
