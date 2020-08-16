@@ -6,7 +6,7 @@
 
     <groupId>io.github.shiryu.commands</groupId>
     <artifactId>parent</artifactId>
-    <version>1.4.7</version>
+    <version>1.4.8</version>
     <packaging>pom</packaging>
 
     <modules>
@@ -53,6 +53,12 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.18.12</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.kyori</groupId>
+            <artifactId>event-api</artifactId>
+            <version>3.0.0</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
