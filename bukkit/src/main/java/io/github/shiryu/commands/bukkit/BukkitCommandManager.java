@@ -55,6 +55,7 @@ public class BukkitCommandManager extends AbstractCommandManager<Plugin> {
             final Field modifiersField = Field.class.getDeclaredField("modifiers");
             modifiersField.setAccessible(true);
             modifiersField.setInt(knownCommandsField, knownCommandsField.getModifiers() & ~Modifier.FINAL);
+            modifiersField.setInt(commandMapField, commandMapField.getModifiers() & ~Modifier.FINAL);
 
             knownCommandsField.set(commandMap, knownCommandsField.get(oldCommandMap));
             commandMapField.set(plugin.getServer(), commandMap);
