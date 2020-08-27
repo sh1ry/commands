@@ -8,12 +8,12 @@ A lightweight,annotation based, easy to use command framework for bukkit and bun
 If you need help please come to our support discord: 
 https://discord.com/invite/xaGZhwW
 
-##Setup
+## Setup
 
 <details>
   <summary>Maven</summary>
   
-  ```maven
+  ```xml
     <repositories>
         <repository>
             <id>jitpack.io</id>
@@ -40,7 +40,7 @@ https://discord.com/invite/xaGZhwW
  ```
 </details>
 
-##Examples
+## Examples
 
 <details>
  <summary> making basic commands </summary>
