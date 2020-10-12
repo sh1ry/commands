@@ -53,7 +53,7 @@ public class BukkitCommandManager extends AbstractCommandManager<Plugin> {
 
         final Object oldCommandMap = ReflectionUtil.getField(commandMapField, plugin.getServer());
 
-        ReflectionUtil.setFinalUnsafe(
+        ReflectionUtil.setField(
                 knownCommandsField,
                 ReflectionUtil.getField(
                         knownCommandsField,
@@ -61,11 +61,11 @@ public class BukkitCommandManager extends AbstractCommandManager<Plugin> {
                 )
         );
 
-        ReflectionUtil.setFinalUnsafe(
+        ReflectionUtil.setField(
                 commandMapField,
                 commandMap
         );
-
+        
         registerParameterType(Boolean.class, new BooleanParameterType());
         registerParameterType(Double.class, new DoubleParameterType());
         registerParameterType(Float.class, new FloatParameterType());
