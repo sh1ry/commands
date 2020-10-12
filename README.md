@@ -8,11 +8,11 @@ A lightweight,annotation based, easy to use command framework for bukkit and bun
 If you need help please come to our support discord: 
 https://discord.com/invite/xaGZhwW
 
-# known issues
+## Known Issues
 
 this framework is not working on 1.13x - 1.16x servers
 
-##Setup
+## Setup
 
 <details>
   <summary>Maven</summary>
@@ -44,7 +44,7 @@ this framework is not working on 1.13x - 1.16x servers
  ```
 </details>
 
-##Examples
+## Examples
 
 <details>
  <summary> making basic commands </summary>
