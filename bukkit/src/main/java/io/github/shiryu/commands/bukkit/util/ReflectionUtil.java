@@ -1,10 +1,7 @@
 package io.github.shiryu.commands.bukkit.util;
 
 import lombok.experimental.UtilityClass;
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
-import sun.misc.Unsafe;
 
 import java.lang.reflect.*;
 
@@ -66,23 +63,6 @@ public class ReflectionUtil {
         }
     }
 
-    @NotNull
-    public Field setFinalUnsafe(@NotNull final Field field, @NotNull final Object update){
-        try{
-            Field unsafeField = Unsafe.class.getDeclaredField("theUnsafe");
-            unsafeField.setAccessible(true);
-            Unsafe unsafe = (Unsafe)field.get(null);
-
-            final Object base = unsafe.staticFieldBase(field);
-            final long offset = unsafe.staticFieldOffset(field);
-
-            unsafe.putObject(base, offset, update);
-
-            return field;
-        }catch (Exception e){
-            return null;
-        }
-    }
 
     @NotNull
     public <T> T getField(@NotNull final Field field, @NotNull final Object base){
