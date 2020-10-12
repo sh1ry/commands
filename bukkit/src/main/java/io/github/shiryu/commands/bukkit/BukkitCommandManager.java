@@ -65,7 +65,7 @@ public class BukkitCommandManager extends AbstractCommandManager<Plugin> {
                 commandMapField,
                 commandMap
         );
-        
+
         registerParameterType(Boolean.class, new BooleanParameterType());
         registerParameterType(Double.class, new DoubleParameterType());
         registerParameterType(Float.class, new FloatParameterType());
