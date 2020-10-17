@@ -30,14 +30,14 @@ this framework is not working on 1.13x - 1.16x servers
         <dependency>
             <groupId>com.github.ShiryuDev.commands</groupId>
             <artifactId>bukkit</artifactId>
-            <version>1.4.9</version>
+            <version>1.5.0</version>
         </dependency>
         
         ## for bungeecord projects
         <dependency>
             <groupId>com.github.ShiryuDev.commands</groupId>
             <artifactId>bungee</artifactId>
-            <version>1.4.9</version>
+            <version>1.5.0</version>
         </dependency>
     </dependencies>
      
