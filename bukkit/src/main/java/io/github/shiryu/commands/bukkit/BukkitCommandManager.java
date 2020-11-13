@@ -24,6 +24,7 @@ import org.jetbrains.annotations.NotNull;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.*;
 
 @Getter
@@ -41,30 +42,26 @@ public class BukkitCommandManager extends AbstractCommandManager<Plugin> {
                 plugin
         );
 
-        final Field commandMapField = ReflectionUtil.findField(
-                plugin.getServer().getClass(),
-                "commandMap"
-        );
+        try {
+            final Field commandMapField = plugin.getServer().getClass().getDeclaredField("commandMap");
+            commandMapField.setAccessible(true);
 
-        final Field knownCommandsField = ReflectionUtil.findField(
-                SimpleCommandMap.class,
-                "knownCommands"
-        );
+            final Object oldCommandMap = commandMapField.get(plugin.getServer());
 
-        final Object oldCommandMap = ReflectionUtil.getField(commandMapField, plugin.getServer());
+            commandMap = new BukkitCommandMap(plugin.getServer(), this);
 
-        ReflectionUtil.setField(
-                knownCommandsField,
-                ReflectionUtil.getField(
-                        knownCommandsField,
-                        oldCommandMap
-                )
-        );
+            final Field knownCommandsField = SimpleCommandMap.class.getDeclaredField("knownCommands");
+            knownCommandsField.setAccessible(true);
 
-        ReflectionUtil.setField(
-                commandMapField,
-                commandMap
-        );
+            final Field modifiersField = Field.class.getDeclaredField("modifiers");
+            modifiersField.setAccessible(true);
+            modifiersField.setInt(knownCommandsField, knownCommandsField.getModifiers() & ~Modifier.FINAL);
+
+            knownCommandsField.set(commandMap, knownCommandsField.get(oldCommandMap));
+            commandMapField.set(plugin.getServer(), commandMap);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         registerParameterType(Boolean.class, new BooleanParameterType());
         registerParameterType(Double.class, new DoubleParameterType());
