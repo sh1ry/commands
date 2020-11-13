@@ -12,7 +12,6 @@ import io.github.shiryu.commands.bukkit.parameter.GameModeParameterType;
 import io.github.shiryu.commands.bukkit.parameter.PlayerParameterType;
 import io.github.shiryu.commands.bukkit.parameter.UUIDParameterType;
 import io.github.shiryu.commands.bukkit.parameter.WorldParameterType;
-import io.github.shiryu.commands.bukkit.util.ReflectionUtil;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
